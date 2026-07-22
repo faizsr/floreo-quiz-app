@@ -1,0 +1,302 @@
+[
+    {
+        "id": 1,
+        "question": "What is the capital of France?",
+        "options": [
+            "London",
+            "Berlin",
+            "Paris",
+            "Madrid"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Paris is the capital and largest city of France."
+    },
+    {
+        "id": 2,
+        "question": "Which programming language is used to develop Flutter applications?",
+        "options": [
+            "Java",
+            "Kotlin",
+            "Swift",
+            "Dart"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Flutter uses Dart as its programming language."
+    },
+    {
+        "id": 3,
+        "question": "Which company developed Flutter?",
+        "options": [
+            "Apple",
+            "Microsoft",
+            "Google",
+            "Meta"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Flutter is Google's open-source UI toolkit."
+    },
+    {
+        "id": 4,
+        "question": "Which widget is used to arrange children vertically in Flutter?",
+        "options": [
+            "Row",
+            "Column",
+            "Stack",
+            "Wrap"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Column arranges its children vertically."
+    },
+    {
+        "id": 5,
+        "question": "What does UI stand for?",
+        "options": [
+            "Universal Interface",
+            "User Interface",
+            "Unique Interaction",
+            "User Internet"
+        ],
+        "correctAnswer": 1,
+        "explanation": "UI stands for User Interface."
+    },
+    {
+        "id": 6,
+        "question": "Which planet is known as the Red Planet?",
+        "options": [
+            "Earth",
+            "Mars",
+            "Jupiter",
+            "Venus"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mars is called the Red Planet because of iron oxide on its surface."
+    },
+    {
+        "id": 7,
+        "question": "Which data structure stores key-value pairs in Dart?",
+        "options": [
+            "List",
+            "Set",
+            "Queue",
+            "Map"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Map stores data as key-value pairs."
+    },
+    {
+        "id": 8,
+        "question": "Which widget creates a scrollable list in Flutter?",
+        "options": [
+            "Container",
+            "Column",
+            "ListView",
+            "Stack"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ListView is used to create scrollable lists."
+    },
+    {
+        "id": 9,
+        "question": "How many continents are there on Earth?",
+        "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Earth has seven continents."
+    },
+    {
+        "id": 10,
+        "question": "Which keyword defines a compile-time constant in Dart?",
+        "options": [
+            "var",
+            "final",
+            "const",
+            "static"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The const keyword creates compile-time constants."
+    },
+    {
+        "id": 11,
+        "question": "What is the default file for Flutter dependencies?",
+        "options": [
+            "main.dart",
+            "flutter.yaml",
+            "pubspec.yaml",
+            "config.yaml"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Dependencies are declared in pubspec.yaml."
+    },
+    {
+        "id": 12,
+        "question": "Which widget allows widgets to overlap in Flutter?",
+        "options": [
+            "Column",
+            "Stack",
+            "Row",
+            "Wrap"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stack places widgets on top of each other."
+    },
+    {
+        "id": 13,
+        "question": "Which symbol is used for single-line comments in Dart?",
+        "options": [
+            "/* */",
+            "#",
+            "//",
+            "<!-- -->"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Single-line comments begin with //."
+    },
+    {
+        "id": 14,
+        "question": "Which method is called first when a StatefulWidget is created?",
+        "options": [
+            "dispose()",
+            "build()",
+            "initState()",
+            "setState()"
+        ],
+        "correctAnswer": 2,
+        "explanation": "initState() is called once before build()."
+    },
+    {
+        "id": 15,
+        "question": "Which widget is commonly used to add empty space between widgets?",
+        "options": [
+            "Padding",
+            "Spacer",
+            "SizedBox",
+            "Align"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SizedBox is commonly used to create fixed spacing."
+    },
+    {
+        "id": 16,
+        "question": "Which operator checks for equality in Dart?",
+        "options": [
+            "=",
+            "==",
+            "!=",
+            "==="
+        ],
+        "correctAnswer": 1,
+        "explanation": "== compares two values for equality."
+    },
+    {
+        "id": 17,
+        "question": "Which package is commonly used for local key-value storage in Flutter?",
+        "options": [
+            "Firebase",
+            "Hive",
+            "SQLite",
+            "HTTP"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hive is a lightweight NoSQL database commonly used for local storage."
+    },
+    {
+        "id": 18,
+        "question": "What does the setState() method do?",
+        "options": [
+            "Deletes the widget",
+            "Updates the widget state and rebuilds the UI",
+            "Navigates to another screen",
+            "Creates a new widget"
+        ],
+        "correctAnswer": 1,
+        "explanation": "setState() notifies Flutter to rebuild the widget with updated state."
+    },
+    {
+        "id": 19,
+        "question": "Which widget displays a Material Design button with elevation?",
+        "options": [
+            "TextButton",
+            "OutlinedButton",
+            "ElevatedButton",
+            "IconButton"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ElevatedButton provides a raised Material button."
+    },
+    {
+        "id": 20,
+        "question": "Which widget is the root of every Flutter application?",
+        "options": [
+            "Scaffold",
+            "Container",
+            "MaterialApp",
+            "Center"
+        ],
+        "correctAnswer": 2,
+        "explanation": "MaterialApp is typically the root widget in a Material Design Flutter app."
+    },
+    {
+        "id": 21,
+        "question": "Which method is used to navigate to a new screen in Flutter?",
+        "options": [
+            "Navigator.push()",
+            "Navigator.pop()",
+            "Route.open()",
+            "Screen.push()"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Navigator.push() adds a new route to the navigation stack."
+    },
+    {
+        "id": 22,
+        "question": "Which widget centers its child within itself?",
+        "options": [
+            "Align",
+            "Padding",
+            "Center",
+            "Expanded"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Center positions its child in the middle of the available space."
+    },
+    {
+        "id": 23,
+        "question": "What is the output type of an async function in Dart?",
+        "options": [
+            "Stream",
+            "Future",
+            "List",
+            "void"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Async functions return a Future."
+    },
+    {
+        "id": 24,
+        "question": "Which widget provides the basic Material Design visual layout structure?",
+        "options": [
+            "MaterialApp",
+            "Scaffold",
+            "Container",
+            "Theme"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Scaffold provides app bars, drawers, floating action buttons, and other layout features."
+    },
+    {
+        "id": 25,
+        "question": "Which widget is used to display an image from the internet?",
+        "options": [
+            "Image.file()",
+            "Image.memory()",
+            "Image.network()",
+            "Image.asset()"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Image.network() loads and displays an image from a URL."
+    }
+]
