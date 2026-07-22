@@ -29,40 +29,38 @@ class _QuestionNumSelectorState extends State<QuestionNumSelector> {
       builder: (context, value, child) {
         int questionLen = value.quizQuestions.length;
 
-        return Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [cardBgShadow],
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Question ${value.currentQuestion!.id}/$questionLen',
-                      ),
-                      Text('Need Help?'),
-                    ],
-                  ),
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [cardBgShadow],
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Question ${value.currentQuestion!.id}/$questionLen',
+                    ),
+                    Text('Need Help?'),
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.all(12),
-                  child: Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: List.generate(questionLen, (index) {
-                      int questionNum = index + 1;
-                      return buildNumberCard(questionNum, value);
-                    }),
-                  ),
+              ),
+              Container(
+                padding: EdgeInsets.all(12),
+                child: Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: List.generate(questionLen, (index) {
+                    int questionNum = index + 1;
+                    return buildNumberCard(questionNum, value);
+                  }),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

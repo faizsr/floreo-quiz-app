@@ -1,3 +1,4 @@
+import 'package:floreo_quiz_app/config/responsive_helper.dart';
 import 'package:floreo_quiz_app/constants/app_colors.dart';
 import 'package:floreo_quiz_app/constants/app_constants.dart';
 import 'package:floreo_quiz_app/controllers/quiz_controller.dart';
@@ -99,17 +100,24 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
 
-                      vSpace20,
                       if (value.progress.selectedAnswers.containsKey(
                         value.currentQuestion!.id,
                       )) ...[
+                        vSpace20,
                         buildExplanationCard(value.currentQuestion!),
+                      ],
+
+                      if (!ResponsiveHelper.isDesktop(context)) ...[
+                        vSpace20,
+                        QuestionNumSelector(),
                       ],
                     ],
                   ),
                 ),
-                hSpace20,
-                Expanded(child: QuestionNumSelector()),
+                if (ResponsiveHelper.isDesktop(context)) ...[
+                  hSpace20,
+                  Expanded(child: QuestionNumSelector()),
+                ],
               ],
             ),
           );
