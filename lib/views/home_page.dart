@@ -1,8 +1,11 @@
 import 'package:floreo_quiz_app/constants/app_colors.dart';
 import 'package:floreo_quiz_app/constants/app_constants.dart';
-import 'package:floreo_quiz_app/helper/responsive_helper.dart';
+import 'package:floreo_quiz_app/controllers/quiz_controller.dart';
+import 'package:floreo_quiz_app/models/quiz_question_model.dart';
 import 'package:floreo_quiz_app/widgets/k_filled_button.dart';
+import 'package:floreo_quiz_app/widgets/question_num_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedOption = -1;
+  late QuizController quizController;
+  List<QuizQuestionModel> quizQuestions = [];
 
   BoxShadow cardBgShadow = BoxShadow(
     blurRadius: 8,
@@ -20,133 +24,122 @@ class _HomePageState extends State<HomePage> {
     offset: const Offset(3, 3),
   );
 
-  double? getQuestionCardRadius() {
-    ScreenType screenType = ResponsiveHelper.getScreenType(context);
-    return screenType == ScreenType.desktop ? 24 : null;
-  }
+  void selectAnswer(int questionNum, String option) =>
+      quizController.selectOption(questionNum, option);
 
-  void selectAnswer(int option) => setState(() => selectedOption = option);
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      quizController = context.read<QuizController>();
+      quizController.initialize();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Floreo Quiz App'), centerTitle: true),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 3,
-              child: ListView(
-                children: [
-                  buildQuestionCard(),
-                  vSpace20,
+      body: Consumer<QuizController>(
+        builder: (context, value, child) {
+          if (value.currentQuestion == null) return SizedBox();
 
-                  ListView.separated(
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => vSpace16,
-                    itemBuilder: (context, index) => buildAnswerCard(index),
-                  ),
-
-                  vSpace20,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: ListView(
                     children: [
-                      KFilledButton(text: 'Prev', onPressed: () {}),
-                      hSpace20,
-                      KFilledButton(text: 'Next', onPressed: () {}),
+                      buildQuestionCard(value.currentQuestion!),
+                      vSpace20,
+
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: value.currentQuestion!.options.length,
+                        separatorBuilder: (context, index) => vSpace16,
+                        itemBuilder: (context, index) => buildAnswerCard(
+                          value.currentQuestion!.options[index],
+                          value,
+                        ),
+                      ),
+
+                      vSpace12,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Note: Your answer will be locked after selection and cannot be modified.',
+                          style: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(color: AppColors.lightGrey),
+                        ),
+                      ),
+
+                      vSpace12,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          KFilledButton(
+                            text: 'Prev',
+                            onPressed: () {
+                              int currentQuestionNo = value.currentQuestion!.id;
+                              value.selectQuestion(currentQuestionNo - 1);
+                            },
+                          ),
+                          hSpace20,
+                          KFilledButton(
+                            text: 'Next',
+                            onPressed: () {
+                              int currentQuestionNo = value.currentQuestion!.id;
+                              value.selectQuestion(currentQuestionNo + 1);
+                            },
+                          ),
+                        ],
+                      ),
+
+                      vSpace20,
+                      if (value.progress.selectedAnswers.containsKey(
+                        value.currentQuestion!.id,
+                      )) ...[
+                        buildExplanationCard(value.currentQuestion!),
+                      ],
                     ],
                   ),
-
-                  vSpace20,
-                  buildExplanationCard(),
-                ],
-              ),
-            ),
-            hSpace20,
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [cardBgShadow],
                 ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Text('Question 1/8'), Text('Need Help?')],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      child: Wrap(
-                        spacing: 12,
-                        runSpacing: 12,
-                        children: List.generate(20, (index) {
-                          return buildNumberCard(index);
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                hSpace20,
+                Expanded(child: QuestionNumSelector()),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
-  CircleAvatar buildNumberCard(int index) {
-    return CircleAvatar(
-      radius: getQuestionCardRadius(),
-      backgroundColor: index == 12
-          ? AppColors.red
-          : index > 12
-          ? AppColors.lightGrey
-          : AppColors.lightBlue,
-      child: Text(
-        '${index + 1}',
-        style: TextStyle(
-          color: index == 12
-              ? AppColors.white
-              : index < 12
-              ? AppColors.white
-              : AppColors.black,
-        ),
-      ),
-    );
-  }
-
-  Widget buildAnswerCard(int option) {
+  Widget buildAnswerCard(String option, QuizController value) {
     return GestureDetector(
-      onTap: () => selectAnswer(option),
+      onTap: () => selectAnswer(value.currentQuestion!.id, option),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          border: selectedOption == option
+          border:
+              value.progress.selectedAnswers[value.currentQuestion!.id] ==
+                  option
               ? Border.all(color: AppColors.lightGrey, width: 2)
               : null,
           boxShadow: [cardBgShadow],
         ),
-        child: const Text(
-          '120 m',
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
+        child: Text(option),
       ),
     );
   }
 
-  Container buildQuestionCard() {
+  Container buildQuestionCard(QuizQuestionModel question) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
@@ -167,19 +160,17 @@ class _HomePageState extends State<HomePage> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Question 1',
+          Text(
+            'Question ${question.id}',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          const Text(
-            'Which programming language is primarily used for Flutter development?',
-          ),
+          Text(question.question),
         ],
       ),
     );
   }
 
-  Container buildExplanationCard() {
+  Container buildExplanationCard(QuizQuestionModel question) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
@@ -197,9 +188,7 @@ class _HomePageState extends State<HomePage> {
             'Explanation',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          const Text(
-            'Which programming language is primarily used for Flutter development?',
-          ),
+          Text(question.explanation),
         ],
       ),
     );
