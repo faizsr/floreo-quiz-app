@@ -100,6 +100,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
 
+                      // ------- Checking if answer is selected before displaying explanation -------
                       if (value.progress.selectedAnswers.containsKey(
                         value.currentQuestion!.id,
                       )) ...[
@@ -114,6 +115,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+
                 if (ResponsiveHelper.isDesktop(context)) ...[
                   hSpace20,
                   Expanded(child: QuestionNumSelector()),
